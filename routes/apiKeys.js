@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const apiKeyController = require("../controllers/apiKeyController");
 
-// Generate API Key
-router.post("/create", apiKeyController.createApiKey);
+// Generate API Key (for public frontend)
+router.post("/generate", apiKeyController.generate);
 
-// Cek API Key
-router.post("/cekapi", apiKeyController.checkApiKey);
+// Check API Key validity
+router.post("/check", apiKeyController.check);
 
 module.exports = router;
