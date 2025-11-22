@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            font-family: "Poppins", sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* CARD */
+        .card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            width: 420px;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .2);
+        }
+
+        h1 {
+            margin-top: 0;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.20);
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: #0d47a1;
+            color: white;
+            font-weight: 600;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        button:hover {
+            background: #1565c0;
+            transform: translateY(-2px);
+        }
+
+        .tab-btn {
+            margin: 10px 5px;
+            width: 48%;
+            display: inline-block;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+            color: white;
+        }
+
+        th, td {
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .logout-btn {
+            background: #c62828;
+            margin-top: 20px;
+        }
+
+        .logout-btn:hover {
+            background: #e53935;
+        }
+
+        .status-on { color: #69f0ae; font-weight: 600; }
+        .status-off { color: #ff8a80; font-weight: 600; }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <h1>Admin Panel</h1>
+
+        <!-- =========================== -->
+        <!--  LOGIN / REGISTER SELECTOR -->
+        <!-- =========================== -->
+        <div>
+            <button class="tab-btn" onclick="showTab('login')">Login</button>
+            <button class="tab-btn" onclick="showTab('register')">Register</button>
+        </div>
+
+        <!-- =========================== -->
+        <!--  REGISTER FORM -->
+        <!-- =========================== -->
+        <div id="register" class="hidden">
+            <h3>Daftar Admin</h3>
+
+            <input type="email" id="regEmail" placeholder="Email">
+            <input type="password" id="regPass" placeholder="Password">
+
+            <button onclick="adminRegister()">Register</button>
+            <p id="regResult"></p>
+        </div>
+
+        <!-- =========================== -->
+        <!--  LOGIN FORM -->
+        <!-- =========================== -->
+        <div id="login">
+            <h3>Login Admin</h3>
+
+            <input type="email" id="logEmail" placeholder="Email">
+            <input type="password" id="logPass" placeholder="Password">
+
+            <button onclick="adminLogin()">Login</button>
+            <p id="loginResult"></p>
+        </div>
+
+        <!-- =========================== -->
+        <!--  DASHBOARD -->
+        <!-- =========================== -->
+        <div id="dashboard" class="hidden">
+
+            <h2>📊 Dashboard</h2>
+
+            <h3>Daftar API Key</h3>
+            <table id="apiTable">
+                <tr><th>API Key</th><th>Status</th></tr>
+            </table>
+
+            <h3>Daftar User</h3>
+            <table id="userTable">
+                <tr><th>Nama</th><th>Email</th></tr>
+            </table>
+
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+    </div>
+
+    <script>
+
+        /* ===============================
+           Ganti Tab
+        ================================ */
+        function showTab(tab) {
+            document.getElementById("login").classList.add("hidden");
+            document.getElementById("register").classList.add("hidden");
+
+            document.getElementById(tab).classList.remove("hidden");
+        }
+
+        /* ===============================
+           REGISTER ADMIN
+        ================================ */
+        async function adminRegister() {
+            const email = document.getElementById("regEmail").value;
+            const password = document.getElementById("regPass").value;
+
+            const res = await fetch("/admin/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await res.json();
+            document.getElementById("regResult").textContent = data.message;
+        }
+
+        /* ===============================
+           LOGIN ADMIN
+        ================================ */
+        async function adminLogin() {
+            const email = document.getElementById("logEmail").value;
+            const password = document.getElementById("logPass").value;
+
+            const res = await fetch("/admin/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                localStorage.setItem("token", data.token);
+                loadDashboard();
+                document.getElementById("login").classList.add("hidden");
+            }
+
+            document.getElementById("loginResult").textContent = data.message || "Login berhasil!";
+        }
+
+        /* ===============================
+           LOAD DASHBOARD
+        ================================ */
+        async function loadDashboard() {
+            document.getElementById("dashboard").classList.remove("hidden");
+
+            const token = localStorage.getItem("token");
+
+            const res = await fetch("/admin/data", {
+                headers: { "Authorization": token }
+            });
+
+            const data = await res.json();
+            const apiTable = document.getElementById("apiTable");
+            const userTable = document.getElementById("userTable");
+
+            apiTable.innerHTML = "<tr><th>API Key</th><th>Status</th></tr>";
+            userTable.innerHTML = "<tr><th>Nama</th><th>Email</th></tr>";
+
+            data.apiKeys.forEach(k => {
+                apiTable.innerHTML += `
+                    <tr>
+                        <td>${k.api_key}</td>
+                        <td class="${k.status === "ON" ? "status-on" : "status-off"}">${k.status}</td>
+                    </tr>
+                `;
+            });
+
+            data.users.forEach(u => {
+                userTable.innerHTML += `
+                    <tr>
+                        <td>${u.first_name} ${u.last_name}</td>
+                        <td>${u.email_address}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        /* ===============================
+           LOGOUT
+        ================================ */
+        function logout() {
+            localStorage.removeItem("token");
+            location.reload();
+        }
+
+    </script>
+
+</body>
+
+</html>
