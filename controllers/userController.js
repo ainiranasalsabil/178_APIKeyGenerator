@@ -1,4 +1,4 @@
-const db = require("../server_db");
+const db = require("../api_key_db");
 
 exports.createUser = (req, res) => {
   const { first_name, last_name, email_address } = req.body;

@@ -1,271 +1,128 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #0d47a1, #1565c0);
-            font-family: "Poppins", sans-serif;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        /* CARD */
-        .card {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(10px);
-            width: 420px;
-            border-radius: 18px;
-            padding: 25px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, .2);
-        }
-
-        h1 {
-            margin-top: 0;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: none;
-            margin-top: 10px;
-            background: rgba(255, 255, 255, 0.20);
-            color: white;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: none;
-            background: #0d47a1;
-            color: white;
-            font-weight: 600;
-            margin-top: 15px;
-            cursor: pointer;
-            transition: 0.2s ease;
-        }
-
-        button:hover {
-            background: #1565c0;
-            transform: translateY(-2px);
-        }
-
-        .tab-btn {
-            margin: 10px 5px;
-            width: 48%;
-            display: inline-block;
-        }
-
-        table {
-            width: 100%;
-            margin-top: 15px;
-            border-collapse: collapse;
-            color: white;
-        }
-
-        th, td {
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding: 8px;
-            font-size: 14px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .logout-btn {
-            background: #c62828;
-            margin-top: 20px;
-        }
-
-        .logout-btn:hover {
-            background: #e53935;
-        }
-
-        .status-on { color: #69f0ae; font-weight: 600; }
-        .status-off { color: #ff8a80; font-weight: 600; }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+body { font-family: Poppins; margin:0; padding:0; background: #e3f2fd; display:flex; justify-content:center; align-items:flex-start; min-height:100vh; padding-top:40px; }
+.container { width:480px; background:rgba(255,255,255,0.85); padding:25px; border-radius:18px; box-shadow:0 4px 18px rgba(0,80,180,0.18); }
+h1,h2 { text-align:center; color:#1565c0; margin-bottom:18px; font-weight:600; }
+input { width:100%; padding:12px; margin:8px 0; border-radius:10px; border:1px solid #90caf9; }
+button { width:100%; padding:12px; border:none; border-radius:12px; background:linear-gradient(to right,#42a5f5,#1e88e5); color:white; cursor:pointer; margin-top:10px; font-weight:600; }
+button:hover { background:linear-gradient(to right,#64b5f6,#2196f3); transform:translateY(-2px); }
+.link-btn { background:transparent; color:#1565c0; box-shadow:none; margin-top:5px; }
+.link-btn:hover { color:#0d47a1; }
+.hidden { display:none; }
+table { width:100%; border-collapse:collapse; margin-top:20px; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 1px 6px rgba(0,0,0,0.1); }
+th { background:#90caf9; padding:10px; color:#0d47a1; }
+td { padding:10px; border-bottom:1px solid #e3f2fd; }
+.status-on { color:#2e7d32; font-weight:bold; }
+.status-off { color:#c62828; font-weight:bold; }
+.logout-btn { padding:10px; background:#e53935; color:white; border:none; border-radius:10px; cursor:pointer; font-weight:600; margin-bottom:15px; }
+.logout-btn:hover { background:#c62828; }
+</style>
 </head>
-
 <body>
 
-    <div class="card">
+<div class="container" id="authBox">
 
-        <h1>Admin Panel</h1>
+  <!-- LOGIN -->
+  <div id="loginScreen">
+    <h1>Admin Login</h1>
+    <input type="email" id="logEmail" placeholder="Email admin..." />
+    <input type="password" id="logPass" placeholder="Password..." />
+    <button onclick="adminLogin()">Login</button>
+    <button class="link-btn" onclick="showRegister()">Belum punya akun? Register</button>
+    <p id="loginResult"></p>
+  </div>
 
-        <!-- =========================== -->
-        <!--  LOGIN / REGISTER SELECTOR -->
-        <!-- =========================== -->
-        <div>
-            <button class="tab-btn" onclick="showTab('login')">Login</button>
-            <button class="tab-btn" onclick="showTab('register')">Register</button>
-        </div>
+  <!-- REGISTER -->
+  <div id="registerScreen" class="hidden">
+    <h2>Register Admin</h2>
+    <input type="email" id="regEmail" placeholder="Email baru..." />
+    <input type="password" id="regPass" placeholder="Password baru..." />
+    <button onclick="adminRegister()">Register</button>
+    <button class="link-btn" onclick="showLogin()">Kembali ke Login</button>
+    <p id="regResult"></p>
+  </div>
 
-        <!-- =========================== -->
-        <!--  REGISTER FORM -->
-        <!-- =========================== -->
-        <div id="register" class="hidden">
-            <h3>Daftar Admin</h3>
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="hidden">
+    <h1>Dashboard Admin</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
 
-            <input type="email" id="regEmail" placeholder="Email">
-            <input type="password" id="regPass" placeholder="Password">
+    <h3>List API Keys</h3>
+    <table id="apiTable">
+      <tr><th>API Key</th><th>Status</th></tr>
+    </table>
 
-            <button onclick="adminRegister()">Register</button>
-            <p id="regResult"></p>
-        </div>
+    <h3>List Users</h3>
+    <table id="userTable">
+      <tr><th>Nama</th><th>Email</th></tr>
+    </table>
+  </div>
+</div>
 
-        <!-- =========================== -->
-        <!--  LOGIN FORM -->
-        <!-- =========================== -->
-        <div id="login">
-            <h3>Login Admin</h3>
+<script>
+const loginScreen = document.getElementById("loginScreen");
+const registerScreen = document.getElementById("registerScreen");
+const dashboard = document.getElementById("dashboard");
+const loginResult = document.getElementById("loginResult");
+const regResult = document.getElementById("regResult");
+const apiTable = document.getElementById("apiTable");
+const userTable = document.getElementById("userTable");
 
-            <input type="email" id="logEmail" placeholder="Email">
-            <input type="password" id="logPass" placeholder="Password">
+function showRegister(){ loginScreen.classList.add("hidden"); registerScreen.classList.remove("hidden"); }
+function showLogin(){ registerScreen.classList.add("hidden"); loginScreen.classList.remove("hidden"); }
 
-            <button onclick="adminLogin()">Login</button>
-            <p id="loginResult"></p>
-        </div>
+async function adminRegister(){
+  const email = document.getElementById("regEmail").value;
+  const password = document.getElementById("regPass").value;
+  const res = await fetch("/admin/register",{ method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({email,password})});
+  const data = await res.json();
+  regResult.textContent = data.message;
+  if(data.success) showLogin();
+}
 
-        <!-- =========================== -->
-        <!--  DASHBOARD -->
-        <!-- =========================== -->
-        <div id="dashboard" class="hidden">
+async function adminLogin(){
+  const email = document.getElementById("logEmail").value;
+  const password = document.getElementById("logPass").value;
+  const res = await fetch("/admin/login",{ method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({email,password})});
+  const data = await res.json();
+  if(data.success && data.token){
+    localStorage.setItem("token", data.token);
+    loginScreen.classList.add("hidden");
+    registerScreen.classList.add("hidden");
+    dashboard.classList.remove("hidden");
+    loadDashboard();
+  } else { loginResult.textContent = data.message; }
+}
 
-            <h2>📊 Dashboard</h2>
+async function loadDashboard(){
+  const token = localStorage.getItem("token");
+  if(!token) return;
+  const res = await fetch("/admin/data",{ headers: { "Authorization": "Bearer " + token }});
+  const payload = await res.json();
+  if(!payload.success) return;
+  const { apiKeys, users } = payload.data;
 
-            <h3>Daftar API Key</h3>
-            <table id="apiTable">
-                <tr><th>API Key</th><th>Status</th></tr>
-            </table>
+  apiTable.innerHTML = "<tr><th>API Key</th><th>Status</th></tr>";
+  apiKeys.forEach(k=>{ apiTable.innerHTML += `<tr><td>${k.api_key}</td><td class="status-${k.status.toLowerCase()}">${k.status}</td></tr>`; });
 
-            <h3>Daftar User</h3>
-            <table id="userTable">
-                <tr><th>Nama</th><th>Email</th></tr>
-            </table>
+  userTable.innerHTML = "<tr><th>Nama</th><th>Email</th></tr>";
+  users.forEach(u=>{ userTable.innerHTML += `<tr><td>${u.first_name} ${u.last_name}</td><td>${u.email_address}</td></tr>`; });
+}
 
-            <button class="logout-btn" onclick="logout()">Logout</button>
-        </div>
+function logout(){
+  localStorage.removeItem("token");
+  dashboard.classList.add("hidden");
+  loginScreen.classList.remove("hidden");
+}
 
-    </div>
-
-    <script>
-
-        /* ===============================
-           Ganti Tab
-        ================================ */
-        function showTab(tab) {
-            document.getElementById("login").classList.add("hidden");
-            document.getElementById("register").classList.add("hidden");
-
-            document.getElementById(tab).classList.remove("hidden");
-        }
-
-        /* ===============================
-           REGISTER ADMIN
-        ================================ */
-        async function adminRegister() {
-            const email = document.getElementById("regEmail").value;
-            const password = document.getElementById("regPass").value;
-
-            const res = await fetch("/admin/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password })
-            });
-
-            const data = await res.json();
-            document.getElementById("regResult").textContent = data.message;
-        }
-
-        /* ===============================
-           LOGIN ADMIN
-        ================================ */
-        async function adminLogin() {
-            const email = document.getElementById("logEmail").value;
-            const password = document.getElementById("logPass").value;
-
-            const res = await fetch("/admin/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password })
-            });
-
-            const data = await res.json();
-
-            if (data.success) {
-                localStorage.setItem("token", data.token);
-                loadDashboard();
-                document.getElementById("login").classList.add("hidden");
-            }
-
-            document.getElementById("loginResult").textContent = data.message || "Login berhasil!";
-        }
-
-        /* ===============================
-           LOAD DASHBOARD
-        ================================ */
-        async function loadDashboard() {
-            document.getElementById("dashboard").classList.remove("hidden");
-
-            const token = localStorage.getItem("token");
-
-            const res = await fetch("/admin/data", {
-                headers: { "Authorization": token }
-            });
-
-            const data = await res.json();
-            const apiTable = document.getElementById("apiTable");
-            const userTable = document.getElementById("userTable");
-
-            apiTable.innerHTML = "<tr><th>API Key</th><th>Status</th></tr>";
-            userTable.innerHTML = "<tr><th>Nama</th><th>Email</th></tr>";
-
-            data.apiKeys.forEach(k => {
-                apiTable.innerHTML += `
-                    <tr>
-                        <td>${k.api_key}</td>
-                        <td class="${k.status === "ON" ? "status-on" : "status-off"}">${k.status}</td>
-                    </tr>
-                `;
-            });
-
-            data.users.forEach(u => {
-                userTable.innerHTML += `
-                    <tr>
-                        <td>${u.first_name} ${u.last_name}</td>
-                        <td>${u.email_address}</td>
-                    </tr>
-                `;
-            });
-        }
-
-        /* ===============================
-           LOGOUT
-        ================================ */
-        function logout() {
-            localStorage.removeItem("token");
-            location.reload();
-        }
-
-    </script>
+if(localStorage.getItem("token")){ loginScreen.classList.add("hidden"); registerScreen.classList.add("hidden"); dashboard.classList.remove("hidden"); loadDashboard(); }
+</script>
 
 </body>
-
 </html>
