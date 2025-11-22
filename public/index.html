@@ -4,213 +4,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembuat API Key - Tema Galaksi</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    <title>Buat API Key & User</title>
 
-        /* ======= BODY ======= */
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* ===== BODY ===== */
         body {
-            font-family: 'Poppins', sans-serif;
-            background: radial-gradient(circle at bottom, #0d1b2a 0%, #000814 100%);
-            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #0d47a1, #1565c0, #1976d2);
+            color: #f5f5f5;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            position: relative;
+            min-height: 100vh;
         }
 
-        /* ======= ANIMASI BINTANG ======= */
-        body::before,
-        body::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 200%;
-            background-image: radial-gradient(white 1px, transparent 1px);
-            background-size: 50px 50px;
-            opacity: 0.2;
-            animation: gerakBintang 100s linear infinite;
-        }
-
-        body::after {
-            background-size: 100px 100px;
-            animation-duration: 150s;
-            opacity: 0.15;
-        }
-
-        @keyframes gerakBintang {
-            from {
-                transform: translateY(0);
-            }
-
-            to {
-                transform: translateY(-1000px);
-            }
-        }
-
-        /* ======= KONTENER ======= */
+        /* ===== CARD UTAMA ===== */
         .container {
-            background: rgba(20, 20, 40, 0.8);
-            border-radius: 20px;
-            box-shadow: 0 0 25px rgba(138, 43, 226, 0.5), inset 0 0 15px rgba(0, 0, 255, 0.1);
-            padding: 30px;
-            width: 350px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            position: relative;
-            z-index: 1;
+            width: 380px;
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(12px);
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.20);
         }
 
         h1 {
-            color: #a78bfa;
-            text-shadow: 0 0 15px #8b5cf6;
+            text-align: center;
+            font-weight: 600;
+            font-size: 24px;
             margin-bottom: 20px;
-            letter-spacing: 1px;
+            color: #e3f2fd;
         }
 
-        /* ======= TOMBOL ======= */
-        button {
-            background: linear-gradient(135deg, #5b21b6, #7c3aed);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 10px 20px;
-            font-size: 16px;
+        h2 {
+            font-size: 18px;
             font-weight: 600;
+            color: #bbdefb;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* ===== BUTTON ===== */
+        button {
+            width: 100%;
+            background: #0d47a1;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-            box-shadow: 0 0 10px rgba(124, 58, 237, 0.6);
+            font-weight: 600;
+            transition: 0.25s ease;
         }
 
         button:hover {
-            background: linear-gradient(135deg, #7c3aed, #a78bfa);
-            box-shadow: 0 0 20px rgba(167, 139, 250, 0.8);
+            background: #1565c0;
             transform: translateY(-2px);
         }
 
-        /* ======= AREA TEKS ======= */
-        .textarea-wrapper {
-            position: relative;
-            margin-top: 20px;
-        }
-
+        /* ===== TEXTAREA API KEY ===== */
         textarea {
             width: 100%;
-            height: 120px;
-            border: 2px solid rgba(138, 43, 226, 0.5);
+            height: 110px;
+            padding: 12px;
+            margin-top: 12px;
             border-radius: 10px;
-            padding: 10px;
-            padding-bottom: 40px;
-            font-size: 14px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #fff;
             resize: none;
-            background-color: rgba(15, 15, 30, 0.8);
-            color: #e0e0e0;
-            box-sizing: border-box;
-            box-shadow: inset 0 0 10px rgba(167, 139, 250, 0.2);
         }
 
-        /* ======= TOMBOL COPY ======= */
-        #btnCopy {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: linear-gradient(135deg, #5b21b6, #7c3aed);
+        /* ===== FORM INPUT ===== */
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
             border: none;
-            color: white;
-            border-radius: 8px;
-            font-size: 12px;
-            padding: 6px 12px;
-            cursor: pointer;
-            display: none;
-            transition: background-color 0.3s ease, transform 0.2s;
-            box-shadow: 0 0 8px rgba(124, 58, 237, 0.4);
-        }
-
-        #btnCopy:hover {
-            background: linear-gradient(135deg, #7c3aed, #a78bfa);
-            transform: scale(1.05);
-        }
-
-        /* ======= PESAN BERHASIL ======= */
-        .copy-success {
-            color: #4ade80;
-            margin-top: 10px;
+            margin-top: 8px;
             font-size: 14px;
+            background: rgba(255, 255, 255, 0.20);
+            color: white;
+        }
+
+        input::placeholder {
+            color: #e1e1e1;
+        }
+
+        .copy-success {
+            color: #a5ffb1;
+            text-align: center;
+            margin-top: 8px;
             display: none;
-            text-shadow: 0 0 5px #22c55e;
         }
     </style>
 </head>
 
 <body>
+
     <div class="container">
-        <h1>✨ Pembuat API Key ✨</h1>
-        <button id="btnBuat" onclick="buatApiKey()">🚀 Buat API Key</button>
 
-        <div class="textarea-wrapper">
-            <textarea id="apikey" readonly placeholder="API Key akan muncul di sini..."></textarea>
-            <button id="btnCopy" onclick="copyApiKey()">📋 Copy</button>
-        </div>
+        <h1>API Key Generator</h1>
 
-        <p class="copy-success" id="copySuccess">✅ API Key berhasil disalin!</p>
+        <!-- BUAT API KEY -->
+        <button onclick="buatApiKey()">Buat API Key</button>
+
+        <textarea id="apikey" placeholder="API Key akan muncul di sini..." readonly></textarea>
+        <button style="margin-top:10px;" onclick="copyApiKey()">Copy API Key</button>
+        <p id="copySuccess" class="copy-success">✔ API Key berhasil disalin!</p>
+
+        <!-- FORM USER -->
+        <h2>Daftarkan User</h2>
+
+        <input type="text" id="firstName" placeholder="Nama Depan">
+        <input type="text" id="lastName" placeholder="Nama Belakang">
+        <input type="email" id="email" placeholder="Email">
+        <input type="text" id="userApiKey" placeholder="Masukkan API Key">
+
+        <button onclick="submitUser()">Submit User</button>
+
+        <p id="userResult" style="text-align:center; margin-top:10px;"></p>
+
     </div>
 
     <script>
+
+        /* ======================= 
+           GENERATE API KEY
+        ========================= */
         async function buatApiKey() {
-            const textarea = document.getElementById('apikey');
-            const button = document.getElementById('btnBuat');
-            const copyButton = document.getElementById('btnCopy');
-            const copySuccess = document.getElementById('copySuccess');
+            const res = await fetch('/create', { method: 'POST' });
 
-            button.disabled = true;
-            button.textContent = "⏳ Membuat...";
-            textarea.value = "";
-            copyButton.style.display = "none";
-            copySuccess.style.display = "none";
+            const data = await res.json();
 
-            try {
-                const response = await fetch('/create', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' }
-                });
-                const data = await response.json();
-                console.log(data)
-                if (data.success) {
-                    textarea.value = data.apiKey;
-                    copyButton.style.display = "block";
-                } else {
-                    textarea.value = "⚠️ Gagal membuat API Key.";
-                }
-
-            } catch (err) {
-                textarea.value = "❌ Terjadi kesalahan: " + err.message;
-            } finally {
-                button.disabled = false;
-                button.textContent = "🚀 Buat API Key";
+            if (data.success) {
+                document.getElementById("apikey").value = data.apiKey;
+            } else {
+                document.getElementById("apikey").value = "Gagal membuat API key.";
             }
         }
 
+        /* ======================= 
+           COPY API KEY
+        ========================= */
         function copyApiKey() {
-            const textarea = document.getElementById('apikey');
-            const copyButton = document.getElementById('btnCopy');
-            const copySuccess = document.getElementById('copySuccess');
+            const textarea = document.getElementById("apikey");
+            const success = document.getElementById("copySuccess");
 
             navigator.clipboard.writeText(textarea.value).then(() => {
-                copyButton.textContent = "✔ Disalin";
-                copySuccess.style.display = "block";
-
-                setTimeout(() => {
-                    copyButton.textContent = "📋 Copy";
-                    copySuccess.style.display = "none";
-                }, 2000);
+                success.style.display = "block";
+                setTimeout(() => success.style.display = "none", 2000);
             });
         }
+
+        /* ======================= 
+           SUBMIT USER
+        ========================= */
+        async function submitUser() {
+            const body = {
+                firstName: document.getElementById("firstName").value,
+                lastName: document.getElementById("lastName").value,
+                email: document.getElementById("email").value
+            };
+
+            const apiKey = document.getElementById("userApiKey").value;
+
+            const res = await fetch('/users', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-api-key": apiKey
+                },
+                body: JSON.stringify(body)
+            });
+
+            const data = await res.json();
+            document.getElementById("userResult").textContent =
+                data.message || JSON.stringify(data);
+        }
+
     </script>
+
 </body>
 
 </html>
