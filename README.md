@@ -1,6 +1,6 @@
 
 ### Dashboard Admin
-![Dashboard Admin](Hasil/dasboardadmin.png)
+![Dashboard Admin](Hasil/dasboaradmin.png)
 
 ### Database Admin
 ![Database Admin](Hasil/databaseadmin.png)
