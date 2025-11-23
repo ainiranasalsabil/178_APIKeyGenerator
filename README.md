@@ -1,32 +1,32 @@
 
 ### Dashboard Admin
-![Dashboard Admin](./dasboardadmin.png)
+![Dashboard Admin](Hasil/dasboardadmin.png)
 
 ### Database Admin
-![Database Admin](./databaseadmin.png)
+![Database Admin](Hasil/databaseadmin.png)
 
 ### Login Admin
-![Login Admin](./loginadmin.png)
+![Login Admin](Hasil/loginadmin.png)
 
 ### Register Admin
-![Register Admin](./registeradmin.png)
+![Register Admin](Hasil/registeradmin.png)
 
 ### Buat User
-![Buat User](./buatusr.png)
+![Buat User](Hasil/buatusr.png)
 
 ### Database User
-![Database User](./databaseuser.png)
+![Database User](Hasil/databaseuser.png)
 
 ### User Jadi
-![User Jadi](./userjadi.png)
+![User Jadi](Hasil/userjadi.png)
 
 ### Buat API Key
-![Buat API](./buatapi.png)
+![Buat API](Hasil/buatapi.png)
 
 ### Copy API Key
-![Copy API](./copyapi.png)
+![Copy API](Hasil/copyapi.png)
 
 ###  Database API
-![Database API](./databaseapi.png)
+![Database API](Hasil/databaseapi.png)
 
 
