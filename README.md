@@ -12,15 +12,15 @@
 ![Register Admin](Hasil/buatadmin.png)
 
 ### Buat User
-![Buat User](Hasil/buatusr.png)
+![Buat User](Hasil/buatuser.png)
 
 ### Database User
 ![Database User](Hasil/databaseuser.png)
 
 ### Buat API Key
-![Buat API](Hasil/buatapi.png)
+![Buat API](Hasil/buatapikey.png)
 
 ###  Database API
-![Database API](Hasil/databaseapi.png)
+![Database API](Hasil/databaseapikey.png)
 
 
